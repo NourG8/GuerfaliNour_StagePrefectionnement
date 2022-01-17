@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    
+
+    <link rel="stylesheet" type="text/css"
+	href="../static/css/style.css"
+	th:href="@{/style.css}" />
+	
+	<style>
+	
+	/*.active a{
+		color:black !important;
+	}*/
+	.active{
+		background-color: white !important;
+	}
+	
+	</style>
+    
+</head>
+
+<body>
+
+
+
+
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="la la-html5 la-2x"></span> <span>GestionStock</span></h2>
+        </div>
+        <!--Secciones-del-tablero-->
+        <div class="sidebar-menu" >
+            <ul sec:authorize="isAuthenticated()">
+            
+            <li sec:authorize="hasRole('ADMIN')" th:class="${#httpServletRequest.requestURI == '/dashboardAdmin'}? active : ''" >
+                    <a  th:href="@{/dashboardAdmin}" href="#"> <span class="la la-photo"></span>
+                    <span>DashBoard Admin</span></a>
+                </li>               
+
+          
+                <li sec:authorize="hasRole('GMat')" th:class="${#httpServletRequest.requestURI == '/gestionMateriel'}? active : ''" >
+                    <a  th:href="@{/gestionMateriel}" href="#"><span class="la la-television"></span>
+                    <span>Gestion des materiaux</span></a>
+                </li>
+               <!-- <li sec:authorize="hasRole('GArt') and hasRole('USER')"> -->
+                <li  class="normal" sec:authorize="hasRole('GArt')" th:class="${#httpServletRequest.requestURI == '/gestionArticle'}? active : ''">
+                    <a th:href="@{/gestionArticle}" href="#"><span class="la la-stack-exchange"></span>
+                    <span>Gestion des articles</span></a>
+                </li>
+                <li   class="normal" sec:authorize="hasRole('OpArt')" th:class="${#httpServletRequest.requestURI == '/gestionOpArticle'}? active : ''">
+                    <a th:href="@{/gestionOpArticle}" href="#"><span class="la la-paypal"></span>
+                    <span>Gestion des operations Art</span></a>
+                </li>
+                <li  class="normal" sec:authorize="hasRole('OpMat')" th:class="${#httpServletRequest.requestURI == '/gestionOpMateriel'}? active : ''">
+                    <a th:href="@{/gestionOpMateriel}" href="javascript:void(0);"><span class="la la-paypal"></span>
+                    <span>Gestion des operations Mat</span></a>
+                </li>
+                
+                <li  class="normal" sec:authorize="hasRole('GUser')"th:class="${#httpServletRequest.requestURI == '/gestionUtilisateur'}? active : ''">
+                    <a th:href="@{/gestionUtilisateur}" href="javascript:void(0);"><span class="las la-user"></span>
+                    <span>Gestion des utilisateurs</span></a>
+                </li>
+                
+                
+                <li  th:class="${#httpServletRequest.requestURI == '/ListCategorie'}? active : ''">
+                    <a th:href="@{/ListCategorie}"><span class="la la-server"></span>
+                    <span>Gestion des categories</span></a>
+                </li>
+                <li sec:authorize="hasRole('OpArt')" th:class="${#httpServletRequest.requestURI == '/ListOpProds'}? active : ''">
+                    <a th:href="@{/ListOpProds}"><span class="la la-shopping-cart"></span>
+                    <span>Panier pour les articles</span></a>
+                </li>
+                
+                <li sec:authorize="hasRole('OpMat')"th:class="${#httpServletRequest.requestURI == '/ListOpProdsMat'}? active : ''">
+                    <a th:href="@{/ListOpProdsMat}"><span class="la la-shopping-cart"></span>
+                    <span>Panier pour les Materiaux</span></a>
+                </li>
+                
+                
+                <li th:class="${#httpServletRequest.requestURI == '/profilAuth'}? active : ''">
+                    <a th:href="@{/profilAuth}" href="javascript:void(0);"><span class="la la-user-secret"></span>
+                    <span>Profil</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content" sec:authorize="isAuthenticated()">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label>Gestion de stock
+            </h2>
+
+        <!--    <div class="search-wrapper" th:if="@{/}">
+                <span class="las la-search" ></span>
+                <form style="float:right;" class="form-inline my-2 my-lg-0" th:action="@{/}" method="get">
+                
+                <input type="search" name="motCle" placeholder="recherche" />
+                </form>
+            </div> -->
+            
+            <div class="user-wrapper" th:object="${Username}">
+               <!-- <img src="img/Avatar.png" width="40px" height="40px" alt=""> -->
+              <!--  <p th:utext="${user}"></p> -->
+               <!-- <img class="img" th:src="@{getPhotoUser(username=${Username})}" /> -->
+                <div >
+                 <h4 sec:authentication="name" ></h4>
+                 <!-- <small  sec:authentication="principal.authorities"></small>  -->
+               <small  sec:authorize="hasRole('ADMIN')">ADMIN</small> 
+              <!-- <small  sec:authorize="hasRole('USER')">USER</small> -->
+               <small  sec:authorize="hasRole('USER') and hasRole('GArt')  ">Gestionnaire des articles</small> 
+               <small  sec:authorize="hasRole('USER') and hasRole('GMat')  ">Gestionnaire des materaux</small> 
+                
+                </div>
+                        
+                <div class="li">
+                
+                <li style="padding-left:19px;"><form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Log Out" id="logout-btn" class="dropdown-item">
+                    </form>
+                    </li>
+                  </div>
+            </div>
+        </header>
+</div>
+
+<!--<script>
+const list = document.querySelectorAll('li')
+console.log(list)
+function activeList() {
+	list.forEach((item) => item.classList.remove('active'));
+	
+	this.classList.add('active')
+	}
+	list.forEach((item) =>
+	item.addEventListener('click',activeList)) 
+
+    </script>
+-->
+    
+  <!--  <script>
+	
+	$(function() {
+   $("li").click(function() {
+      //remove classes from all
+      $("li").removeClass("active");
+      //add class to the one we clicked
+      $(this).addClass("active");
+   });
+}); 
+	
+	</script> -->
+	
+
+
+
+
+</body>
+
+</html>

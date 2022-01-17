@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorator="navbar">
+<head>
+<link rel="stylesheet" href="/css/fontawesome-free-5.15.1-web/css/all.css">
+
+  <link rel="stylesheet" type="text/css"
+href="../static/index.css"
+th:href="@{/index.css}" />
+<title>Insert title here</title>
+</head>
+
+<body>
+   <div class="container">
+    <div class="wrapper">
+     <!--Top Menu & Menu button-->
+        <div class="sidebar">
+            <div class="profile"  id="navbarSupportedContent" 	>
+                <!--Profile Image-->
+                <img src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg" alt="profile_picture">
+                 <!--Profile Title & Descruption-->
+                <h3>Anamika Roy</h3>
+               <p>Designer</p>
+               
+            </div>
+               <ul>
+                <li>
+                    <a th:href="@{/}" href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span class="item">List des materiaux</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/ListArticleC}" href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-desktop"></i></span>
+                        <span class="item">List des articles</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/AjouterProdMateriel}" href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">Ajouter Materiel</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/AjouterProdArticleC}">
+                        <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                        <span class="item">Ajouter un article</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/ListOpProd}" href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-database"></i></span>
+                        <span class="item">List des operations</span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="item">Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-user-shield"></i></span>
+                        <span class="item">Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <span class="icon"><i class="fas fa-cog"></i></span>
+                        <span class="item">Settings</span>
+                    </a>
+                </li>
+            </ul>
+                
+         </div>
+           
+             <!--Menu item-->
+             
+        <div class="section">   
+            <div class="top_navbar">
+                <div class="hamburger" sec:authorize="isAuthenticated()">
+                    <a href="#">
+                        <i class="fas fa-bars"></i> 
+                    </a>
+                    <a class="navbar-brand navbar-logo" href="#" style="padding-left:10px;">Gestion de Stock</a>
+                      
+                    <a class="nav-item" th:href="@{/logout}" style="padding-left:890px; font-size: 19px;">LogOut</a>
+                             
+                           
+                </div>
+                  
+             </div>
+             
+        </div>
+        
+    </div>
+      </div>
+  <script>
+  var hamburger = document.querySelector(".hamburger");
+	hamburger.addEventListener("click", function(){
+		document.querySelector("body").classList.toggle("active");
+	})
+
+// function test(){
+// 	  var tabsNewAnim = $('#navbarSupportedContent');
+// 	  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+// 	  var activeItemNewAnim = tabsNewAnim.find('.active');
+// 	  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+// 	  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+// 	  var itemPosNewAnimTop = activeItemNewAnim.position();
+// 	  var itemPosNewAnimLeft = activeItemNewAnim.position();
+// 	  $(".hori-selector").css({
+// 	    "top":itemPosNewAnimTop.top + "px", 
+// 	    "left":itemPosNewAnimLeft.left + "px",
+// 	    "height": activeWidthNewAnimHeight + "px",
+// 	    "width": activeWidthNewAnimWidth + "px"
+// 	  });
+// 	  $("#navbarSupportedContent").on("click","li",function(e){
+// 	    $('#navbarSupportedContent ul li').removeClass("active");
+// 	    $(this).addClass('active');
+// 	    var activeWidthNewAnimHeight = $(this).innerHeight();
+// 	    var activeWidthNewAnimWidth = $(this).innerWidth();
+// 	    var itemPosNewAnimTop = $(this).position();
+// 	    var itemPosNewAnimLeft = $(this).position();
+// 	    $(".hori-selector").css({
+// 	      "top":itemPosNewAnimTop.top + "px", 
+// 	      "left":itemPosNewAnimLeft.left + "px",
+// 	      "height": activeWidthNewAnimHeight + "px",
+// 	      "width": activeWidthNewAnimWidth + "px"
+// 	    });
+// 	  });
+// 	}
+// 	$(document).ready(function(){
+// 	  setTimeout(function(){ test(); });
+// 	});
+// 	$(window).on('resize', function(){
+// 	  setTimeout(function(){ test(); }, 500);
+// 	});
+// 	$(".navbar-toggler").click(function(){
+// 	  setTimeout(function(){ test(); });
+// 	});
+
+
+
+	
+  </script>
+  
+  
+</body>
+</html>

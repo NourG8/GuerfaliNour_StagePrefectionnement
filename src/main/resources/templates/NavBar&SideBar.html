@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="navbar">
+	<link rel="stylesheet" type="text/css"
+href="../static/css/bootstrap.min.css"
+th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+href="../static/myStyle.css"
+th:href="@{/myStyle.css}" />
+
+<link rel="stylesheet" type="text/css"
+href="../static/style.css"
+th:href="@{/style.css}" />
+<link rel="stylesheet" href="/css/fontawesome-free-5.15.1-web/css/all.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css" id="bootstrap-css">
+<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"/>
+
+<script>
+
+function test(){
+	  var tabsNewAnim = $('#navbarSupportedContent');
+	  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+	  var activeItemNewAnim = tabsNewAnim.find('.active');
+	  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+	  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+	  var itemPosNewAnimTop = activeItemNewAnim.position();
+	  var itemPosNewAnimLeft = activeItemNewAnim.position();
+	  $(".hori-selector").css({
+	    "top":itemPosNewAnimTop.top + "px", 
+	    "left":itemPosNewAnimLeft.left + "px",
+	    "height": activeWidthNewAnimHeight + "px",
+	    "width": activeWidthNewAnimWidth + "px"
+	  });
+	  $("#navbarSupportedContent").on("click","li",function(e){
+	    $('#navbarSupportedContent ul li').removeClass("active");
+	    $(this).addClass('active');
+	    var activeWidthNewAnimHeight = $(this).innerHeight();
+	    var activeWidthNewAnimWidth = $(this).innerWidth();
+	    var itemPosNewAnimTop = $(this).position();
+	    var itemPosNewAnimLeft = $(this).position();
+	    $(".hori-selector").css({
+	      "top":itemPosNewAnimTop.top + "px", 
+	      "left":itemPosNewAnimLeft.left + "px",
+	      "height": activeWidthNewAnimHeight + "px",
+	      "width": activeWidthNewAnimWidth + "px"
+	    });
+	  });
+	}
+	$(document).ready(function(){
+	  setTimeout(function(){ test(); });
+	});
+	$(window).on('resize', function(){
+	  setTimeout(function(){ test(); }, 500);
+	});
+	$(".navbar-toggler").click(function(){
+	  setTimeout(function(){ test(); });
+	});
+
+
+
+</script>
+
+<head>
+<meta charset="utf-8" />
+<title>Gestion de Stock</title>
+</head>
+<body>
+
+<nav class="navbar fixed-top navbar-expand-custom navbar-mainbg navbar-expand-lg" th:fragment="header1">
+        <a class="navbar-brand navbar-logo" href="#">Gestion de Stock</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"  sec:authorize="isAuthenticated()">
+        
+<!--         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" -->
+<!--                         data-bs-toggle="dropdown" aria-expanded="false" th:text="${user.nom}"> -->
+<!--                   ${user.nom} -->
+<!--          </button> -->
+         
+         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li sec:authorize="hasAnyAuthority('USER')"><a class="dropdown-item" th:href="@{/User/createArticle}">Create Articles</a></li>
+                    <li sec:authorize="hasAnyAuthority('USER')"><a class="dropdown-item" th:href="@{/User/myArticles}">My Articles</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/Admin/adminDashboardArticles}">Articles Dashboard</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/Admin/adminDashboardallUsers}">Users Dashboard</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/Admin/categories}">Categories Dashboard</a></li>
+                    <li><a class="dropdown-item" th:href="@{/updateUser}">Edit Profile</a></li>
+                    <li><form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Log Out" id="logout-btn" class="dropdown-item">
+                    </form>
+                    </li>
+
+         </ul>
+                
+        
+            <ul class="navbar-nav  nav-pills">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Address Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>Components</a>
+                </li> 
+                
+                 <li class="nav-item" style="margin-left:650px;" >
+                    <a class="nav-link" th:href="@{/logout}">LogOut</a>
+                </li>
+                
+                
+<!--   <li class="nav-item" style=" width:750px;"> -->
+                    
+<!--                       <form style="float:right;" class="form-inline my-2 my-lg-0" th:action="@{ListAdmin}" method="get"> -->
+<!-- 	  <div class="form-group"> -->
+<!-- 	    <label class="form-label" style="color:white; padding:19px; font-size: 18px;" > Mot cle  </label><br> -->
+<!-- 	    <input type="text" name="motCle" class="form-control mr-sm-3" /> -->
+<!-- 	  <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button> -->
+<!-- 	  </div> -->
+<!--     </form> -->
+<!-- </li> -->
+ 
+ 
+ 
+<!--  <div class="input-group"> -->
+<!--  <form class="form-outline" > -->
+<!--     <label class="form-label">Search</label> -->
+<!--     <input id="search-focus"  class="form-control" /> -->
+<!-- </form> -->
+<!--   <button type="button" class="btn btn-primary"> -->
+<!--     <i class="fas fa-search"></i> -->
+<!--   </button> -->
+  
+<!-- </div> -->
+ 
+ 
+                
+            </ul>
+        </div>
+    </nav>
+
+<br><br><br>
+<div class="sidebar-container" th:fragment="header2">
+  <div class="sidebar-logo">
+   Stock
+  </div>
+<ul class="sidebar-navigation">
+    <li class="header">Categories</li>
+    <li>
+
+      <a th:href="@{/ListArticle}">
+        <i class="fas fa-cubes" aria-hidden="true"></i>  Article a consommé
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <i class="fas fa-laptop" aria-hidden="true"></i>  Materiels
+      </a>
+    </li>
+    <li class="header">Utilisateurs</li>
+    <li>
+    
+<!--       <a th:href="@{/showUtilisateurForm}"> -->
+      <a th:href="@{/ListOuvrier}">
+        <i class="fa fa-users" aria-hidden="true"></i> Ouvriers
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/ListAdmin}">
+      
+        <i class="fas fa-users-cog" aria-hidden="true"></i> Admins
+      </a>
+    </li>
+    
+    <li>
+      <a th:href="@{/ListUtilisateur}">
+      
+        <i class="fas fa-users-cog" aria-hidden="true"></i> Tous les utilisateurs
+      </a>
+    </li>
+    
+     <li class="header">Magazins</li>
+    
+  </ul>
+</div>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/form.css"/>
+
+    <link rel="stylesheet" type="text/css"
+	href="../static/css/style.css"
+	th:href="@{/style.css}" />
+	
+	   <link rel="stylesheet" type="text/css"
+        href="../static/form.css" 
+        th:href="@{/form.css}" /> 
+    
+</head>
+
+
+<body>
+<div th:replace="NavBarDashboard"></div>
+
+    <div class="main-content">
+  
+        <main>
+    
+        <br><br><br><br>
+        <center>
+        <div class="body"> 
+        
+            <form th:action="@{/updateArticleCIntoDB}" th:object="${articleC}"  method="POST">
+            
+            <h1>Modifier un article</h1>		<br>
+                <div class="separation"></div>
+              <div class="corps-formulaire">
+            
+                <input type="hidden" th:field="*{code}"/>
+          
+            <div class="gauche">
+            <div class="groupe"> 
+		          <label>Matricule</label>
+		          <input type="text" th:field="*{matricule}" > 
+	        </div> 
+             
+               <div class="groupe"> 
+		          <label>Intitule</label>
+		          <input type="text" th:field="*{intitule}" />
+                </div>
+             
+              <div class="groupe"> 
+		          <label>Quantite</label>
+		          <input type="text" th:field="*{qte}"  />
+                </div>
+              </div>
+             
+            <div class="droite"> 
+          <div class="groupe"> 
+               <label>Categorie</label>
+            <select th:field="${articleC.Categorie.nomCateg}">
+            <option selected value="-1">Choisir une categorie</option> 
+            <option th:each="categ:${categories}" th:value="${categ.nomCateg}"  th:text="${categ.nomCateg}">categorier</option>
+            </select>
+           </div>
+             
+        <div class="groupe"> 
+          <label>Magazin</label>
+            <select th:field="${articleC.Magazin.nomMagazin}" >
+             <option selected value="-1">Choisir le magazin</option>
+              <option th:each="mag:${magazins}" th:value="${mag.nomMagazin}"  th:text="${mag.nomMagazin}">magazin</option>
+            </select>
+          </div>
+           <div class="groupe"> 
+		          <label>Quantite Minimale</label>
+		          <input type="text" th:field="*{qteMin}"  />
+                </div>
+  </div>
+  </div>
+          
+   
+             
+       <div class="pied-formulaire" align="center">
+        <button>Enregistrer</button>
+    </div>
+    </form>
+        
+      </div>  
+      
+        
+        
+        
+        </center>
+        </main>
+
+    </div>
+
+</body>
+
+</html>

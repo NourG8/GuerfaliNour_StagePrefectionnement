@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="/css/fontawesome-free-5.15.1-web/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"/>
+    
+    <link rel="stylesheet" type="text/css"
+	href="../static/css/style.css"
+	th:href="@{/style.css}" />
+	
+	<style>
+	
+	.pagination ul {
+	 text-align:center;
+	 }
+	
+.pagination ul li {
+  display: inline-block;
+  Background-color:white;
+ 
+}
+
+.pagination ul li a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+main .search-wrapper{
+	width:1400px;
+	text-align:center;
+	align-items: center;
+	
+     float:center;
+      display: flex;
+}
+
+.search-wrapper span {
+    display: inline-block;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
+}
+
+.search-wrapper input {
+    height: 100%;
+    width:1320px;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+body{
+    background-color: #efefef;
+}
+
+</style>
+    
+    
+</head>
+
+
+<body>
+<div th:replace="NavBarDashboard"></div>
+<br><br>
+    <div class="main-content">
+    <br><br>
+        <main>
+<!-- <div class="cards">
+
+                <div class="card-single">
+                    <div>
+                        <h1>5</h1>
+                        <span>Menejo de usuarios</span>
+                    </div>
+                    <div>
+                        <span class="las la-users"></span>
+                    </div>
+                </div>
+
+                <div class="card-single">
+                    <div>
+                        <h1>12</h1>
+                        <span>Menejo de doctores</span>
+                    </div>
+                    <div>
+                        <span class="las la-stethoscope"></span>
+                    </div>
+                </div>
+
+                <div class="card-single">
+                    <div>
+                        <h1>25</h1>
+                        <span>Manejo de pacientes</span>
+                    </div>
+                    <div>
+                        <span class="las la-wheelchair"></span>
+                    </div>
+                </div>
+
+                <div class="card-single">
+                    <div>
+                        <h1>2</h1>
+                        <span>Nuevas consultas</span>
+                    </div>
+                    <div>
+                        <span class="lab la-wpforms"></span>
+                    </div>
+                </div>
+            </div> -->
+            <!--Tabla-->
+            
+            <div class="success" role="alert" th:text="${success}" th:if="${success}"></div>
+            <div class="error" role="alert" th:text="${error}" th:if="${error}"></div>
+             <div class="success" role="alert" th:text="${successInsertion}" th:if="${successInsertion}"></div>
+             <div class="success" role="alert" th:text="${successDelete}" th:if="${successDelete}"></div>
+             <div class="success" role="alert" th:text="${successUpdate}" th:if="${successUpdate}"></div>
+             <div class="success" role="alert" th:text="${succes}" th:if="${succes}"></div>
+             <div class="info" role="alert" th:text="${succesDesactivate}" th:if="${succesDesactivate}"></div>
+            
+            
+     <div  class="search-wrapper" th:if="@{/index}">
+                <span class="las la-search" ></span>
+                <form style="float:right;" class="form-inline my-2 my-lg-0" th:action="@{/index}" method="get">
+                
+                <input  type="search" name="motCle" placeholder="recherche" />
+                </form>
+            </div>
+            
+            <div class="recent-grid">
+                <div class="projects">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Liste des materiaux</h3>
+
+                          <a th:href="@{/AjouterProdMateriel}">  <button>Ajouter un materiel <span class="las la-arrow-right">
+                            </span></button></a>
+                        </div>
+
+                        <div class="card-body" sec:authorize="isAuthenticated()">
+                            <div class="table-responsive">
+                                <table width="100%" sec:authorize="isAuthenticated()">
+                                    <thead>
+                                        <tr>
+                                            <td  style="text-align: center;">#</td>
+                                            <td  style="text-align: center;">Intitule</td>
+                                            <td  style="text-align: center;">Matricule</td>
+                                             <td  style="text-align: center;">Magazin</td>
+                                             <td  style="text-align: center;">Categorie</td>
+                                             <td  style="text-align: center;">Date Retour</td>
+                                            <!--  <td  style="text-align: center;">Prise du materiel</td>-->
+                                              <td  style="text-align: center;">Etat du materiel</td>
+                                             <td  style="text-align: center;">Modifier</td>
+                                             <td sec:authorize="hasRole('ADMIN')" style="text-align: center;">Supprimer</td>
+                                             
+                                             
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+          <!-- <tr th:each="produit:${produits}" th:if="${produit.class.simpleName=='Materiel'}"> -->
+        <tr th:each="produit:${pageUtilisateurs}" >
+            <td  style="text-align: center;" th:text="${produit.code}"></td>
+            <td   style="text-align: center;" th:text="${produit.intitule}"></td>
+            <td  style="text-align: center;"th:text="${produit.matricule}"></td> 
+            <td  style="text-align: center;"th:text="${produit.Magazin.nomMagazin}"></td>
+            <td  style="text-align: center;" th:text="${produit.Categorie.nomCateg}"></td>
+            <td style="text-align: center;"  >
+             <a  style="text-align: center; color:royalblue" th:if="${produit.dateRetour==null}">Materiel non occupé</a>
+              <a  style="text-align: center;" th:if="${produit.dateRetour!=null}" th:text="${produit.dateRetour}"></a>
+            </td>   
+              
+            
+    
+          
+	    	  
+	    	 <!--  <td  style="text-align: center;">
+	         <a th:href="@{/createOpMateriel/{code}(code=${produit.code})}"><i Style="color:#27AE60 ;" class="la la-files-o la-2x"></i></a>
+            </td>
+            -->
+	    	 
+	          <td  style="text-align: center;">
+	    	 <a  style="text-align: center; color:red;" th:if="${produit.dateRetour!=null}">Materiel non disponible</a>
+	    	 <a  style="text-align: center;" th:if="${produit.dateRetour==null}">Materiel disponible</a>
+	    	  </td>
+	    	  
+	    	    <td  style="text-align: center;">
+	         <a th:href="@{/updateMateriel/{code}(code=${produit.code})}"><i Style="color:#2874A6; text-align:center;" class="la la-pencil-square-o la-2x"></i></a>
+	          </td>
+	        
+	    	  
+	          <td style="text-align: center;margin-left:20px;" sec:authorize="hasRole('ADMIN')"> 
+	    	<a style="text-align: center;" onclick="return confirm('etes vous sure ?')"  th:href="@{/DeleteMateriel/{code}(code=${produit.code})}"><i Style="color:red;text-align:center;" class="la la-trash-o la-2x"></i></a>
+	    	  </td> 
+	    	  
+<!-- 	    	  kenet la-lg -->
+
+        </tr>
+                                    </tbody>
+                                </table>
+                                
+                                
+                    
+                                
+                                
+                            </div>
+                        </div>
+
+
+                    </div>
+                    
+                    <br><br>
+                    <div class="pagination" th:if="${totalPages > 1}">
+					<ul class="nav nav-pills nav-fill justify-content-center">
+					
+                   <li class="page-item">
+					<a class="page-link p-3 mb-2 bg-light text-dark" th:if="${currentPage <= totalPages}" th:href="@{/index(page=${currentPage -1},motCle=${motCle})}">&laquo;   </a>
+					</li>
+					
+					<li class="page-item" th:each="p:${pages}" th:class="${p==currentPage}?active:''">
+					<a class="page-link p-3 mb-2 bg-light text-dark" th:href="@{/index(page=${p+1},motCle=${motCle})}"
+							   th:text="${p+1}"></a>
+					</li>
+					
+					<li class="page-item">
+					<a class="page-link p-3 mb-2 bg-light text-dark" th:if="${currentPage <= totalPages}" th:href="@{/index(page=${currentPage +1},motCle=${motCle})}">  &raquo;</a>
+					</li>
+					
+						</ul>
+					</div>
+                    
+                    
+                </div>
+
+<!--                 <div class="customers"> -->
+
+<!--                     <div class="card"> -->
+<!--                         <div class="card-header"> -->
+<!--                             <h3>Nuevos pacientes</h3> -->
+
+<!--                             <button>Mostrar todo <span class="las la-arrow-right"> -->
+<!--                             </span></button> -->
+<!--                         </div> -->
+
+<!--                         <div class="card-body"> -->
+
+<!--                             <div class="customer"> -->
+<!--                                 <div class="info"> -->
+<!--                                     <img src="avatars/1.png" width="40px" height="40px" alt=""> -->
+<!--                                     <div> -->
+<!--                                         <h4>Ana Maria Acosta</h4> -->
+<!--                                         <small>Diarrea</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact"> -->
+<!--                                     <span class="las la-user-circle"></span> -->
+<!--                                     <span class="lab la-whatsapp"></span> -->
+<!--                                     <span class="las la-phone"></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer"> -->
+<!--                                 <div class="info"> -->
+<!--                                     <img src="avatars/2.png" 40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Karen Orozco</h4> -->
+<!--                                         <small>Gripa</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/3.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Kelly Ortiz</h4> -->
+<!--                                         <small>Intoxicación</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/4.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Julian Quesada</h4> -->
+<!--                                         <small>Malestar general</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/5.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Nelson Stiven</h4> -->
+<!--                                         <small>Bartolinitis</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/6.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Sara Cortez</h4> -->
+<!--                                         <small>Acné</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/7.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Mario Ortiz</h4> -->
+<!--                                         <small>Demencia</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/8.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Leopoldo Sas</h4> -->
+<!--                                         <small>Eccema</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/9.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Stiven Alrboleda</h4> -->
+<!--                                         <small>Encefalitis</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+<!--                             <div class="customer "> -->
+<!--                                 <div class="info "> -->
+<!--                                     <img src="avatars/10.png " width="40px " height="40px " alt=" "> -->
+<!--                                     <div> -->
+<!--                                         <h4>Brandon Carnadona</h4> -->
+<!--                                         <small>Faringitis</small> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div class="contact "> -->
+<!--                                     <span class="las la-user-circle "></span> -->
+<!--                                     <span class="lab la-whatsapp "></span> -->
+<!--                                     <span class="las la-phone "></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+
+                            
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+                
+            </div>
+        </main>
+
+    </div>
+
+</body>
+
+</html>

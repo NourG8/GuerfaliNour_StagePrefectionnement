@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="/css/fontawesome-free-5.15.1-web/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"/>
+    
+    <link rel="stylesheet" type="text/css"
+	href="../static/css/style.css"
+	th:href="@{/style.css}" />
+	
+	
+	<!-- <style>
+	.img{
+	position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-bottom: 2px;
+    overflow: hidden;
+    cursor: pointer;
+	}
+	</style> -->
+    
+    
+</head>
+
+
+
+<body>
+<div th:replace="NavBarDashboard"></div>
+<br><br>
+    <div class="main-content">
+    <br><br>
+        <main>
+        <div class="info" role="alert" th:text="${success}" th:if="${success}"></div>
+            <div class="error" role="alert" th:text="${error}" th:if="${error}"></div>
+             <div class="success" role="alert" th:text="${successInsertion}" th:if="${successInsertion}"></div>
+             <div class="success" role="alert" th:text="${successDelete}" th:if="${successDelete}"></div>
+             <div class="success" role="alert" th:text="${successUpdate}" th:if="${successUpdate}"></div>
+             <div class="success" role="alert" th:text="${succesA}" th:if="${succesA}"></div>
+              <div class="success" role="alert" th:text="${succesM}" th:if="${succesM}"></div>
+             <div class="info" role="alert" th:text="${succesDesactivate}" th:if="${succesDesactivate}"></div>
+  
+            
+            <div class="recent-grid">
+                <div class="projects">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Liste des administrateurs</h3>
+                            <a th:href="@{/AjouterAdmin}">  <button>Ajouter un administrateur <span class="las la-arrow-right">
+                            </span></button></a>
+                        </div>
+       <div class="card-body">
+                            <div class="table-responsive">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+            
+            <td style="text-align: center;" scope="col">username</td>
+            <td style="text-align: center;"  scope="col">Prenom</td>
+            <td style="text-align: center;"  scope="col">cin</td>
+            <td style="text-align: center;"  scope="col">age</td>
+            <td style="text-align: center;"  scope="col">login</td>
+            <td style="text-align: center;"  scope="col">Role</td>
+            <td style="text-align: center;"  scope="col">Action</td>
+        </tr>
+        </thead>
+        <tbody>
+      <tr th:each="u:${Admin}">
+            <td style="text-align: center;"  th:text="${u.username}"></td>
+            <td style="text-align: center;"  th:text="${u.prenom}"></td>
+            <td style="text-align: center;"  th:text="${u.cin}"></td>
+            <td style="text-align: center;" th:text="${u.age}"></td>
+            <td style="text-align: center;"   th:text="${u.login}"></td>
+            <td style="text-align: center;"   th:text="${u.roles}">
+           <!-- <span>[</span> -->
+             
+            </td>
+            <td>
+			                <a style="text-align: center;"  th:href="@{/updateAdmin/{username}(username=${u.username})}"><i Style="color:#2874A6; text-align:center;" class="la la-pencil-square-o la-2x"></i></a>
+<!-- 			                <a onclick="return confirm('etes vous sure ?')" th:href="@{/deleteAdmin/{id}(id=${o.id})}"><button type="button" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button></a> -->
+                             <a style="text-align: center;" onclick="return confirm('etes vous sure ?')"  th:href="@{/DeleteUser/{username}(username=${u.username})}"><i Style="color:red;" class="la la-trash-o la-2x"></i></a>
+              </td>
+              
+  </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                </div>
+        </main>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="stylesheet" href="/css/fontawesome-free-5.15.1-web/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"/>
+    
+    <link rel="stylesheet" type="text/css"
+	href="../static/css/style.css"
+	th:href="@{/style.css}" />
+	
+	
+	<script>
+const list = document.querySelectorAll('li')
+console.log(list)
+function activeList() {
+	list.forEach((item) => item.classList.remove('active'));
+	
+	this.classList.add('active')
+	}
+	list.forEach((item) =>
+	item.addEventListener('click',activeList)) 
+
+    </script>
+	
+	<style>
+	
+	.pagination ul {
+	 text-align:center;
+	 }
+	
+.pagination ul li {
+  display: inline-block;
+  Background-color:white;
+ 
+}
+
+.pagination ul li a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+main .search-wrapper{
+	width:650px;
+	text-align:center;
+	align-items: center;
+	
+     float:center;
+      display: flex;
+}
+
+.search-wrapper span {
+    display: inline-block;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
+}
+
+.search-wrapper input {
+    height: 100%;
+    width:540px;
+    padding: .5rem;
+    border: none;
+    outline: none;
+}
+
+body{
+    background-color: #efefef;
+}
+
+.card-single .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.card-single .card-header button {
+    background: var(--main-color);
+    border-radius: 10px;
+    color: #fff;
+    font-size: .8rem;
+    margin-top:150px;
+    padding: .5rem 1rem;
+    border: 2px solid var(--main-color);
+}
+
+
+.button {
+  background: var(--main-color);
+  /*border: none;*/
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  margin-top:210px;
+  border: 2px solid var(--main-color);
+  cursor: pointer;
+ 
+}
+
+.cards {
+	   padding-top:5px;
+}
+
+.card-single {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 0.4rem;
+    border-radius: 2px;
+    height:305px
+    
+}
+
+</style>
+    
+    
+</head>
+
+
+<body>
+<div th:replace="NavBarDashboard"></div>
+<br><br>
+    <div class="main-content">
+    <br><br>
+        <main>
+<div class="cards" sec:authorize="isAuthenticated()" >
+
+              <!--  <div class="card-single">
+                    <div>
+                        <h1>5</h1>
+                        <span>Menejo de usuarios</span>
+                    </div>
+                    <div>
+                        <span class="las la-users"></span>
+                    </div>
+                </div> -->
+
+                <div class="card-single"  sec:authorize="hasRole('ADMIN') ">
+                    <div>
+                        <h1 style="color:#1f8fc3;">Tableau des ouvriers</h1>
+                        <br><br>
+                         <!-- <span>Pour acceder a la liste des materiaux, vous devez cliquer sur le boutton ci-dessous ! </span>
+                            <br><br>-->
+                         <span style="text-align:center;color:#8390A2;">nombre des ouvriers : <span th:object="${size}" th:utext="${size}" style="color:#8390A2;"></span></span>
+                       
+                       
+                         
+                    </div>
+                    
+                   
+                          <a th:href="@{/ListUsers}">  <button class="button" style="width:225px;">Tableau des ouvriers<span class="las la-arrow-right">
+                            </span></button></a>
+                     
+                    
+                    <div>
+                      <span class="las la-users la-2x"></span>
+                    </div>
+                    
+                </div>
+
+                <div class="card-single" style="background-color: white;" sec:authorize="hasRole('ADMIN') ">
+                    <div>
+                       
+                        <h1 style="color:#1f8fc3;">Ajouter un ouvrier</h1>
+                        <br><br>
+                        <span style="text-align:center;color:#8390A2;">nombre des ouvriers: <span th:object="${size}" th:utext="${size}" style="color:#8390A2;"></span></span> 
+                      <!--  <span>nombre des materiaux non disponibles: <span>12</span></span> -->
+                    </div>
+                    
+                    <!-- <div class="card-header" > -->
+                          <a th:href="@{/AjouterOuvrier}">  <button class="button "style="background:#1f8fc3;color:white;width:225px">Ajouter un ouvrier<span class="las la-arrow-right">
+                            </span></button></a>
+                    <!-- </div> -->
+                        
+                    <div>
+                     
+                        <span class="las la-users" style="color:#1f8fc3;"></span>
+                    </div>
+                </div>
+                
+                
+                
+                         
+                
+                
+                
+                
+                <div class="card-single" sec:authorize="hasRole('ADMIN') ">
+                    <div>
+                       
+                        <h1 style="color:#1f8fc3;">Tableau des administrateurs</h1>
+                        <br><br>
+                        <span>nombre des Administrateurs: <span th:object="${sizeAdmin}" th:utext="${sizeAdmin}"></span></span> 
+                      <!--  <span>nombre des materiaux non disponibles: <span>12</span></span> -->
+                    </div>
+                    
+                    <!-- <div class="card-header" > -->
+                          <a th:href="@{/ListAdmin}">  <button class="button "style="background:#1f8fc3;color:white;width:265px">Tableau des administrateurs<span class="las la-arrow-right">
+                            </span></button></a>
+                    <!-- </div> -->
+                        
+                    <div>
+                       <span class="las la-user"></span>
+
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+                <div class="card-single" sec:authorize="hasRole('ADMIN') ">
+                    <div>
+                       
+                        <h1>Ajouter un administrateur</h1>
+                        <br><br>
+                        <span>nombre des administrateurs: <span th:object="${sizeAdmin}" th:utext="${sizeAdmin}"></span></span> 
+                      <!--  <span>nombre des materiaux non disponibles: <span>12</span></span> -->
+                    </div>
+                    
+                    <!-- <div class="card-header" > -->
+                          <a th:href="@{/AjouterAdmin}">  <button class="button "style="background:white;color:#1f8fc3;width:265px">Ajouter un administrateur<span class="las la-arrow-right">
+                            </span></button></a>
+                    <!-- </div> -->
+                        
+                    <div>
+                       <span class="las la-user"></span>
+
+                    </div>
+                </div>
+                
+                
+                   <div class="card-single"  sec:authorize="hasRole('USER') "style=" height:420px;margin-top:150px;">
+                    <div>
+                        <h1 style="color:#1f8fc3;">Tableau des ouvriers</h1>
+                        <br><br>
+                         <!-- <span>Pour acceder a la liste des materiaux, vous devez cliquer sur le boutton ci-dessous ! </span>
+                            <br><br>-->
+                         <span style="text-align:center;color:#8390A2;">nombre des ouvriers : <span th:object="${size}" th:utext="${size}" style="color:#8390A2;"></span></span>
+                       
+                       
+                         
+                    </div>
+                    
+                   
+                          <a th:href="@{/ListUsers}">  <button class="button" style="width:225px;">Tableau des ouvriers<span class="las la-arrow-right">
+                            </span></button></a>
+                     
+                    
+                    <div>
+                      <span class="las la-users la-2x"></span>
+                    </div>
+                    
+                </div>
+                
+                
+                
+                
+                
+                
+                <div class="card-single" style=" height:420px;margin-top:150px;" sec:authorize="hasRole('USER') ">
+                    <div>
+                       
+                        <h1 >Ajouter un ouvrier</h1>
+                        <br><br>
+                        <span >nombre des ouvriers: <span th:object="${size}" th:utext="${size}" style="color:white;"></span></span> 
+                      <!--  <span>nombre des materiaux non disponibles: <span>12</span></span> -->
+                    </div>
+                    
+                    <!-- <div class="card-header" > -->
+                          <a th:href="@{/AjouterOuvrier}">  <button class="button "style="background:white;color:#1f8fc3;width:225px">Ajouter un ouvrier<span class="las la-arrow-right">
+                            </span></button></a>
+                    <!-- </div> -->
+                        
+                    <div>
+                     
+                        <span class="las la-users"></span>
+                    </div>
+                </div>
+                
+                
+                
+
+
+             <!--   <div class="card-single">
+                    <div>
+                        <h1>2</h1>
+                        <span>Nuevas consultas</span>
+                    </div>
+                    <div>
+                        <span class="lab la-wpforms"></span>
+                    </div>
+                </div> -->
+            </div>
+            
+             
+        </main>
+
+    </div>
+
+</body>
+
+</html>
